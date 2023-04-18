@@ -130,3 +130,11 @@ make e2e
 ```console
 make reviewable
 ```
+
+### Open a PR
+
+Push your changes to a branch on your fork, then open a PR to [upstream
+Crossplane](https://github.com/crossplane/crossplane/pulls).  Make sure you fill
+out the entire [PR
+template](https://github.com/crossplane/crossplane/blob/master/.github/PULL_REQUEST_TEMPLATE.md)
+to provide complete context for reviewers.
