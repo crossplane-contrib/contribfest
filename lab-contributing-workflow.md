@@ -29,7 +29,8 @@ make
 
 ### Make Local Changes
 
-Make a local change to the Crossplane code, for example adding a new logging line in the main entry point:
+Make a local change to the Crossplane code, for example adding a new logging
+line in the main entry point:
 
 ```patch
 diff --git a/cmd/crossplane/core/core.go b/cmd/crossplane/core/core.go
@@ -61,7 +62,8 @@ make
 
 ### Make Changes Faster
 
-Make a second local change now, for example updating your logging line with new content:
+Make a second local change now, for example updating your logging line with new
+content:
 
 ```patch
 diff --git a/cmd/crossplane/core/core.go b/cmd/crossplane/core/core.go
@@ -80,9 +82,51 @@ index 17d12a34..7c804e8d 100644
 
 ### Deploy Changes Faster
 
-Instead of having to build and deploy the entire Crossplane image, we can just run the controllers directly in proc:
+Instead of having to build and deploy the entire Crossplane image, we can just
+run the controllers directly in proc:
 
 ```console
 kubectl -n crossplane-system scale deploy crossplane --replicas=0
 make run
+```
+
+### Run Tests
+
+```console
+make test
+```
+
+Modify one of the unit tests to purposefully fail, and then run the tests again,
+so we can see the failure output:
+
+```patch
+diff --git a/internal/version/version_test.go b/internal/version/version_test.go
+index 772f731c..2c9075bf 100644
+--- a/internal/version/version_test.go
++++ b/internal/version/version_test.go
+@@ -42,7 +42,7 @@ func TestInRange(t *testing.T) {
+ 		"ValidInRange": {
+ 			reason: "Should return true when a valid semantic version is in a valid range.",
+ 			args: args{
+-				version: "v0.13.0",
++				version: "v0.3.0",
+ 				r:       ">0.12.0",
+ 			},
+ 			want: want{
+```
+
+```console
+make test
+```
+
+### Run e2e Integration Tests
+
+```console
+make e2e
+```
+
+### Getting Changes Ready for Review
+
+```console
+make reviewable
 ```
