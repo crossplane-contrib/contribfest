@@ -255,15 +255,6 @@ observed:
             color: yellow
         status:
           atProvider: {}
-    - name: second-robot
-      resource:
-        apiVersion: dummy.upbound.io/v1beta1
-        kind: Robot
-        spec:
-          forProvider:
-            color: green
-        status:
-          atProvider: {}
 desired:
   composite:
     resource:
@@ -286,8 +277,8 @@ desired:
 ```
 </details>
 
-Let's run and validate that the first robot always has `yellow` and the other
-one is changing with different runs.
+Let's run and validate that the first robot under `desired.resources` always has
+`yellow` and the other one is changing with different runs.
 ```bash
 cat test.yaml | go run main.go
 ```
@@ -351,4 +342,12 @@ kubectl get robots -o yaml
 ```
 
 As you can see, one has `yellow` which was assigned in the `Composition` and the
-other one has a random color assigned by our function and it persists.
+other one has a random color assigned by our function and it persists over many
+calls.
+
+### Cleanup
+
+Delete the `RobotGroup` instance.
+```bash
+kubectl delete robotgroup my-robot-group
+```
