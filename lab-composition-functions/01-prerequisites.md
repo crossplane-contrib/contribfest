@@ -6,7 +6,8 @@
 
 ## Preparing the environment
 
-1. Create a kind cluster.
+1. Create a kind cluster. See [kind documentation](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)
+   for installation instructions.
    ```bash
    kind create cluster --wait 5m
    kubectl create namespace crossplane-system
@@ -21,6 +22,11 @@
      --from-file=.dockerconfigjson=$HOME/.docker/config.json \
      --type=kubernetes.io/dockerconfigjson
    ```
+   Additionally, export your username as an environment variable so that we can
+    use it later.
+    ```bash
+    export REGISTRY=<your-dockerhub-username>
+    ```
 3. Install Crossplane v1.11.0 or later installed with composition functions
    feature flag enabled.
    ```bash

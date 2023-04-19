@@ -6,6 +6,12 @@ reconciliation pass. In this tutorial, we'll create a function that parses all
 `Robot` objects in the desired state and sets a random color to them if they
 don't have one because it is a required parameter.
 
+We will use DockerHub to push & pull the images we build. The following environment
+variable will be required to make sure the commands work with your own images.
+```bash
+export REGISTRY=<your-dockerhub-username>
+```
+
 Let's build on top of our no-op function.
 ```bash
 cp -a xfn-noop xfn-random
@@ -285,18 +291,19 @@ cat test.yaml | go run main.go
 
 Let's build and push the function.
 ```bash
-docker build --tag muvaf/xfn-random:v0.1.0 .
-docker push muvaf/xfn-random:v0.1.0
+docker build --tag ${REGISTRY}/xfn-random:v0.1.0 .
+docker push ${REGISTRY}/xfn-random:v0.1.0
 ```
 
-Set the new image on our `Composition` object with `kubectl edit`.
+Set the new image on our `Composition` object with `kubectl edit`. **Make sure to
+use your DockerHub username instead of `${REGISTRY}`.**
 ```yaml
   ...
   functions:
     - name: my-random-function
       type: Container
       container:
-        image: muvaf/xfn-random:v0.1.0
+        image: ${REGISTRY}/xfn-random:v0.1.0
 ```
 
 Edit `Composition` to add a second `Robot` object but this time without its

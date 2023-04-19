@@ -4,6 +4,12 @@ We will start with a no-op function that does nothing but prints the data it
 receives from Crossplane. This function will be used as a base for all other
 functions we will write in this tutorial.
 
+We will use DockerHub to push & pull the images we build. The following environment
+variable will be required to make sure the commands work with your own images.
+```bash
+export REGISTRY=<your-dockerhub-username>
+```
+
 ## Building the Function
 
 Initialize the go module.
@@ -74,8 +80,9 @@ metadata:
 Let's build and push the image to a registry. Assumes you are already logged in
 to DockerHub.
 ```bash
-docker build --tag muvaf/xfn-noop:v0.1.0 .
-docker push muvaf/xfn-noop:v0.1.0
+# Make sure ${REGISTRY} is set to your DockerHub username.
+docker build --tag ${REGISTRY}/xfn-noop:v0.1.0 .
+docker push ${REGISTRY}/xfn-noop:v0.1.0
 ```
 
 Let's test it locally. The following is an example `FunctionIO` that we can get
@@ -109,7 +116,7 @@ desired:
 
 Now let's give it to our composition function.
 ```bash
-cat test.yaml | docker run -i --rm muvaf/xfn-noop:v0.1.0
+cat test.yaml | docker run -i --rm ${REGISTRY}/xfn-noop:v0.1.0
 ```
 
 Alternatively, we can run the Go program directly.
@@ -179,7 +186,7 @@ spec:
   - name: my-noop-function
     type: Container
     container:
-      image: muvaf/xfn-noop:v0.1.0
+      image: ${REGISTRY}/xfn-noop:v0.1.0
 EOF
 ```
 
