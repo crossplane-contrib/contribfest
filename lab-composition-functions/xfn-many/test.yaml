@@ -1,0 +1,20 @@
+apiVersion: apiextensions.crossplane.io/v1alpha1
+kind: FunctionIO
+observed:
+  composite:
+    resource:
+      apiVersion: contribfest.crossplane.io/v1alpha1
+      kind: XRobotGroup
+      metadata:
+        name: somename
+      spec:
+        count: 5
+desired:
+  composite:
+    resource:
+      apiVersion: contribfest.crossplane.io/v1alpha1
+      kind: XRobotGroup
+      metadata:
+        name: somename
+      spec:
+        count: 5

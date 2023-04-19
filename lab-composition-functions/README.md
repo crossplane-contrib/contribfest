@@ -18,4 +18,4 @@ We will write all composition functions in Golang.
 * [Prerequisites](01-prerequisites.md)
 * A no-op function to serve as boilerplate: [xfn-noop](02-xfn-noop.md)
 * A function that assigns a randomly calculated value as default: [xfn-random](03-xfn-random.md)
-* A function that creates N number of resources as specified by the user.
+* A function that creates N number of resources as specified by the user: [xfn-many](04-xfn-many.md)

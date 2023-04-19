@@ -1,0 +1,11 @@
+apiVersion: meta.pkg.crossplane.io/v1alpha1
+kind: Function
+metadata:
+  name: xfn-many
+  annotations:
+    meta.crossplane.io/maintainer: ContribFest Crossplane
+    meta.crossplane.io/source: github.com/crossplane-contrib/contribfest
+    meta.crossplane.io/license: Apache-2.0
+    meta.crossplane.io/description: |
+      A Composition Function that prints the data it receives and returns a no-op
+      result to Crossplane.
