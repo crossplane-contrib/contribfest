@@ -15,7 +15,7 @@ cd xfn-random
 Change the function name to `xfn-random` in all files.
 ```bash
 # On Mac
-sed -i 's/xfn-noop/xfn-random/g' *
+sed -i '' 's/xfn-noop/xfn-random/g' *
 # On Linux
 sed -i 's/xfn-noop/xfn-random/g' *
 ```

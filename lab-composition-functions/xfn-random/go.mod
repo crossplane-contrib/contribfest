@@ -1,4 +1,4 @@
-module github.com/muvaf/xfn-the-hard-way/xfn-random
+module github.com/crossplane-contrib/contribfest/lab-composition-functions/xfn-random
 
 go 1.20
 

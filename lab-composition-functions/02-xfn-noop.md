@@ -8,12 +8,12 @@ functions we will write in this tutorial.
 
 Initialize the go module.
 ```bash
-mkdir fn-noop
-cd fn-noop
+mkdir xfn-noop
+cd xfn-noop
 ```
 ```bash
 # Do not forget to change "muvaf" github namespace to your own.
-go mod init github.com/muvaf/xfn-the-hard-way/fn-noop
+go mod init github.com/crossplane-contrib/contribfest/lab-composition-functions/xfn-noop
 ```
 
 Create a `main.go` file that only prints the standard input it receives.
@@ -62,10 +62,10 @@ Lastly, we will add a `crossplane.yaml` file with metadata about the function.
 apiVersion: meta.pkg.crossplane.io/v1alpha1
 kind: Function
 metadata:
-  name: fn-noop
+  name: xfn-noop
   annotations:
     meta.crossplane.io/maintainer: ContribFest Crossplane
-    meta.crossplane.io/source: github.com/muvaf/xfn-the-hard-way
+    meta.crossplane.io/source: github.com/crossplane-contrib/contribfest/lab-composition-functions/
     meta.crossplane.io/license: Apache-2.0
     meta.crossplane.io/description: |
       A Composition Function that prints the data it receives and returns a no-op
@@ -125,7 +125,7 @@ spec:
 EOF
 ```
 
-Create a `Composition` that uses the `fn-noop` function.
+Create a `Composition` that uses the `xfn-noop` function.
 ```bash
 cat <<EOF | kubectl apply -f -
 apiVersion: apiextensions.crossplane.io/v1

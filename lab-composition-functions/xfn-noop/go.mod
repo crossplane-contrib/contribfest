@@ -1,3 +1,3 @@
-module github.com/muvaf/xfn-the-hard-way/xfn-noop
+module github.com/crossplane-contrib/contribfest/lab-composition-functions/xfn-noop
 
 go 1.20
