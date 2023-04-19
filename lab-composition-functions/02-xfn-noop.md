@@ -79,11 +79,43 @@ docker build --tag muvaf/xfn-noop:v0.1.0 .
 docker push muvaf/xfn-noop:v0.1.0
 ```
 
-Let's test it locally.
+Let's test it locally. The following is an example `FunctionIO` that we can get
+from Crossplane. Create a file called `test.yaml` with the following content:
+```yaml
+apiVersion: apiextensions.crossplane.io/v1alpha1
+kind: FunctionIO
+observed:
+  composite:
+    resource:
+      apiVersion: contribfest.crossplane.io/v1alpha1
+      kind: XRobotGroup
+      metadata:
+        name: somename
+desired:
+  composite:
+    resource:
+      apiVersion: contribfest.crossplane.io/v1alpha1
+      kind: XRobotGroup
+      metadata:
+        name: somename
+  resources:
+    - name: one-robot
+      resource:
+        apiVersion: dummy.upbound.io/v1beta1
+        kind: Robot
+        spec:
+          forProvider:
+            color: yellow
+```
+
+Now let's give it to our composition function.
 ```bash
-# You can download the test.yaml with the following command:
-# curl -L https://raw.githubusercontent.com/crossplane-contrib/contribfest/main/lab-composition-functions/xfn-noop/test.yaml > test.yaml
 cat test.yaml | docker run -i --rm muvaf/xfn-noop:v0.1.0
+```
+
+Alternatively, we can run the Go program directly.
+```bash
+cat test.yaml | go run main.go
 ```
 
 ## Installation

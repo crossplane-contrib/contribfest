@@ -70,6 +70,11 @@ func main() {
 }
 ```
 
+Run this program with our existing `test.yaml` to see it's working.
+```bash
+cat test.yaml | go run main.go
+```
+
 Let's define an array of colors that we'll use to set the random value.
 ```go
 var (
@@ -135,7 +140,7 @@ generate a random color for the rest.
 
 Here is the full `main.go` file.
 <details>
-  <summary>Click to see the full main.go file</summary>
+  <summary>Click to see the full `main.go` file</summary>
 
 ```go
 package main
@@ -212,10 +217,67 @@ func main() {
 go mod tidy
 ```
 
-Let's check locally to make sure everything works as expected with a sample input.
+Now let's make some changes in our `test.yaml` in order to validate that the
+function does not manipulate the existing `Robot` objects that already have a
+color set. We'll need to add an entry to `observed` section.
+
+<details>
+  <summary>Click to see the full `test.yaml` file</summary>
+
+```yaml
+apiVersion: apiextensions.crossplane.io/v1alpha1
+kind: FunctionIO
+observed:
+  composite:
+    resource:
+      apiVersion: contribfest.crossplane.io/v1alpha1
+      kind: XRobotGroup
+      metadata:
+        name: somename
+  resources:
+    - name: one-robot
+      resource:
+        apiVersion: dummy.upbound.io/v1beta1
+        kind: Robot
+        spec:
+          forProvider:
+            color: yellow
+        status:
+          atProvider: {}
+    - name: second-robot
+      resource:
+        apiVersion: dummy.upbound.io/v1beta1
+        kind: Robot
+        spec:
+          forProvider:
+            color: green
+        status:
+          atProvider: {}
+desired:
+  composite:
+    resource:
+      apiVersion: contribfest.crossplane.io/v1alpha1
+      kind: XRobotGroup
+      metadata:
+        name: somename
+  resources:
+    - name: one-robot
+      resource:
+        apiVersion: dummy.upbound.io/v1beta1
+        kind: Robot
+        spec:
+          forProvider:
+            color: yellow
+    - name: second-robot
+      resource:
+        apiVersion: dummy.upbound.io/v1beta1
+        kind: Robot
+```
+</details>
+
+Let's run and validate that the first robot always has `yellow` and the other
+one is changing with different runs.
 ```bash
-# You can download the test.yaml file with the following command:
-# curl -L https://raw.githubusercontent.com/crossplane-contrib/contribfest/main/lab-composition-functions/xfn-random/test.yaml > test.yaml
 cat test.yaml | go run main.go
 ```
 
