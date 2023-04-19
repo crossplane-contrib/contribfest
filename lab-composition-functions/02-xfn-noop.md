@@ -70,19 +70,11 @@ metadata:
   name: xfn-noop
   annotations:
     meta.crossplane.io/maintainer: ContribFest Crossplane
-    meta.crossplane.io/source: github.com/crossplane-contrib/contribfest/lab-composition-functions/
+    meta.crossplane.io/source: github.com/crossplane-contrib/contribfest
     meta.crossplane.io/license: Apache-2.0
     meta.crossplane.io/description: |
       A Composition Function that prints the data it receives and returns a no-op
       result to Crossplane.
-```
-
-Let's build and push the image to a registry. Assumes you are already logged in
-to DockerHub.
-```bash
-# Make sure ${REGISTRY} is set to your DockerHub username.
-docker build --tag ${REGISTRY}/xfn-noop:v0.1.0 .
-docker push ${REGISTRY}/xfn-noop:v0.1.0
 ```
 
 Let's test it locally. The following is an example `FunctionIO` that we can get
@@ -114,14 +106,22 @@ desired:
             color: yellow
 ```
 
-Now let's give it to our composition function.
-```bash
-cat test.yaml | docker run -i --rm ${REGISTRY}/xfn-noop:v0.1.0
-```
-
 Alternatively, we can run the Go program directly.
 ```bash
 cat test.yaml | go run main.go
+```
+
+Let's build and push the image to a registry. Assumes you are already logged in
+to DockerHub.
+```bash
+# Make sure ${REGISTRY} is set to your DockerHub username.
+docker build --tag ${REGISTRY}/xfn-noop:v0.1.0 .
+docker push ${REGISTRY}/xfn-noop:v0.1.0
+```
+
+Now let's give it to our composition function built as a container image.
+```bash
+cat test.yaml | docker run -i --rm ${REGISTRY}/xfn-noop:v0.1.0
 ```
 
 ## Installation

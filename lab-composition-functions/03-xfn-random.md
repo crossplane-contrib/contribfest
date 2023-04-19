@@ -105,12 +105,18 @@ machinery.
 go get github.com/upbound/provider-dummy
 go get k8s.io/apimachinery/pkg/runtime
 go get k8s.io/apimachinery/pkg/util/json
-go get sigs.k8s.io/yaml
 ```
 
 Right after we get the `FunctionIO` object, here we extract the colors of the all
 observed `Robot`s to make sure to propagate them to the desired state so that
 they don't get overridden.
+
+Make sure to add the following to the imports:
+```go
+imports (
+  dummyv1alpha1 "github.com/upbound/provider-dummy/apis/iam/v1alpha1"
+)
+```
 ```go
     colors := map[string]string{}
     for _, observed := range obj.Observed.Resources {
@@ -232,9 +238,6 @@ Now let's make some changes in our `test.yaml` in order to validate that the
 function does not manipulate the existing `Robot` objects that already have a
 color set. We'll need to add an entry to `observed` section.
 
-<details>
-  <summary>Click to see the full `test.yaml` file</summary>
-
 ```yaml
 apiVersion: apiextensions.crossplane.io/v1alpha1
 kind: FunctionIO
@@ -275,7 +278,6 @@ desired:
         apiVersion: dummy.upbound.io/v1beta1
         kind: Robot
 ```
-</details>
 
 Let's run and validate that the first robot under `desired.resources` always has
 `yellow` and the other one is changing with different runs.

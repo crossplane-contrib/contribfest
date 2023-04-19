@@ -6,8 +6,14 @@
 
 ## Preparing the environment
 
-1. Create a kind cluster. See [kind documentation](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)
-   for installation instructions.
+You'll need the following tools installed:
+* `go`
+* `docker`
+* `kind` (Kubernetes in Docker)
+* `kubectl`
+* `helm`
+
+1. Create a kind cluster.
    ```bash
    kind create cluster --wait 5m
    kubectl create namespace crossplane-system
@@ -29,6 +35,9 @@
     ```
 3. Install Crossplane v1.11.0 or later installed with composition functions
    feature flag enabled.
+   ```bash
+   helm repo add crossplane-stable https://charts.crossplane.io/stable && helm repo update
+   ```
    ```bash
    helm install crossplane --namespace crossplane-system crossplane-stable/crossplane \
      --create-namespace --wait \

@@ -168,6 +168,11 @@ func generateSuffix() (string, error) {
 Now, let's create new `Robot`s and add them to the desired list.
 ```go
 	for i := 0; i < add; i++ {
+		suf, err := generateSuffix()
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "failed to generate random suffix for name: %v", err)
+			os.Exit(1)
+		}
 		r := &dummyv1alpha1.Robot{
 			Spec: dummyv1alpha1.RobotSpec{
 				ForProvider: dummyv1alpha1.RobotParameters{
@@ -182,11 +187,6 @@ Now, let's create new `Robot`s and add them to the desired list.
 		raw, err := json.Marshal(r)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "failed to marshal resource: %v", err)
-			os.Exit(1)
-		}
-		suf, err := generateSuffix()
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "failed to generate random suffix for name: %v", err)
 			os.Exit(1)
 		}
 		robots = append(robots, v1alpha1.DesiredResource{
