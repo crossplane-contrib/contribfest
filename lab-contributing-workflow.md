@@ -55,15 +55,45 @@ make
 
 ### Deploy Your Local Changes
 
+Deploy your changes by upgrading the entire helm release:
+
 ```console
+./cluster/local/kind.sh helm-upgrade
+```
+
+### Make Changes without updating Helm release
+
+Make a second local change now, for example updating your logging line with new
+content:
+
+```patch
+diff --git a/cmd/crossplane/core/core.go b/cmd/crossplane/core/core.go
+index 17d12a34..7c804e8d 100644
+--- a/cmd/crossplane/core/core.go
++++ b/cmd/crossplane/core/core.go
+@@ -204,5 +204,7 @@ func (c *startCommand) Run(s *runtime.Scheme, log logging.Logger) error { //noli
+ 		}
+ 	}
+
++	log.Info("Contribfest is updating without helm!", "controller options", o)
++
+ 	return errors.Wrap(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")
+ }
+```
+
+Now deploy these changes without upgrading doing a Helm upgrade. We'll simply
+build and load a new image into our test cluster:
+
+```console
+make
 ./cluster/local/kind.sh update
 ./cluster/local/kind.sh restart
 ```
 
 ### Make Changes Faster
 
-Make a second local change now, for example updating your logging line with new
-content:
+Make a final local change now, for example updating your logging line with more
+new content:
 
 ```patch
 diff --git a/cmd/crossplane/core/core.go b/cmd/crossplane/core/core.go
@@ -80,10 +110,8 @@ index 17d12a34..7c804e8d 100644
  }
 ```
 
-### Deploy Changes Faster
-
 Instead of having to build and deploy the entire Crossplane image, we can just
-run the controllers directly in proc:
+run the controllers directly on our local machine with extra debugging info:
 
 ```console
 kubectl -n crossplane-system scale deploy crossplane --replicas=0
