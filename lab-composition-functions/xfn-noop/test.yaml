@@ -1,0 +1,24 @@
+apiVersion: apiextensions.crossplane.io/v1alpha1
+kind: FunctionIO
+observed:
+  composite:
+    resource:
+      apiVersion: contribfest.crossplane.io/v1alpha1
+      kind: XRobotGroup
+      metadata:
+        name: somename
+desired:
+  composite:
+    resource:
+      apiVersion: contribfest.crossplane.io/v1alpha1
+      kind: XRobotGroup
+      metadata:
+        name: somename
+  resources:
+    - name: one-robot
+      resource:
+        apiVersion: dummy.upbound.io/v1beta1
+        kind: Robot
+        spec:
+          forProvider:
+            color: yellow
