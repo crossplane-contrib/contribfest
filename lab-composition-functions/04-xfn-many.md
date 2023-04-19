@@ -322,8 +322,7 @@ observed:
       metadata:
         name: somename
       spec:
-        parameters:
-          count: 5
+        count: 5
   resources:
     - name: robot-8sd7h
       resource:
@@ -342,8 +341,7 @@ desired:
       metadata:
         name: somename
       spec:
-        parameters:
-          count: 5
+        count: 5
 ```
 
 Let's run our function and see the result.
