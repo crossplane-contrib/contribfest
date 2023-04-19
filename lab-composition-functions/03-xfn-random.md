@@ -76,6 +76,11 @@ func main() {
 }
 ```
 
+```bash
+# This is to make sure go.sum is tidied up after all the go get commands.
+go mod tidy
+```
+
 Run this program with our existing `test.yaml` to see it's working.
 ```bash
 cat test.yaml | go run main.go
