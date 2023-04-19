@@ -12,7 +12,6 @@ mkdir xfn-noop
 cd xfn-noop
 ```
 ```bash
-# Do not forget to change "muvaf" github namespace to your own.
 go mod init github.com/crossplane-contrib/contribfest/lab-composition-functions/xfn-noop
 ```
 
