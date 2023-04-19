@@ -81,7 +81,8 @@ docker push muvaf/xfn-noop:v0.1.0
 
 Let's test it locally.
 ```bash
-# You can download the test.yaml file here: TODO
+# You can download the test.yaml with the following command:
+# curl -L https://raw.githubusercontent.com/crossplane-contrib/contribfest/main/lab-composition-functions/xfn-noop/test.yaml > test.yaml
 cat test.yaml | docker run -i --rm muvaf/xfn-noop:v0.1.0
 ```
 

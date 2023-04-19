@@ -73,7 +73,7 @@ func main() {
 Let's define an array of colors that we'll use to set the random value.
 ```go
 var (
-    Colors = []string{"red", "green", "blue", "yellow", "orange", "purple", "black", "white"}
+Colors = []string{"red", "green", "blue", "yellow", "orange", "purple", "black", "white"}
 )
 ```
 
@@ -97,14 +97,14 @@ observed `Robot`s to make sure to propagate them to the desired state so that
 they don't get overridden.
 ```go
 	colors := map[string]string{}
-    for _, observed := range obj.Observed.Resources {
-        r := &dummyv1alpha1.Robot{}
-        if err := json.Unmarshal(observed.Resource.Raw, r); err != nil {
-            fmt.Fprintf(os.Stderr, "failed to unmarshal observed resource: %v", err)
-            os.Exit(1)
-        }
-        colors[observed.Name] = r.Spec.ForProvider.Color
-    }
+for _, observed := range obj.Observed.Resources {
+r := &dummyv1alpha1.Robot{}
+if err := json.Unmarshal(observed.Resource.Raw, r); err != nil {
+fmt.Fprintf(os.Stderr, "failed to unmarshal observed resource: %v", err)
+os.Exit(1)
+}
+colors[observed.Name] = r.Spec.ForProvider.Color
+}
 ```
 
 In the next loop, we skip all the entries that already have a color set and
@@ -112,25 +112,25 @@ generate a random color for the rest.
 
 ```go
 	for i, desired := range obj.Desired.Resources {
-        r := &dummyv1alpha1.Robot{}
-        if err := yaml.Unmarshal(desired.Resource.Raw, r); err != nil {
-            fmt.Fprintf(os.Stderr, "failed to unmarshal desired resource: %v", err)
-            os.Exit(1)
-        }
-        if colors[desired.Name] != "" {
-            r.Spec.ForProvider.Color = colors[desired.Name]
-        } else {
-            r.Spec.ForProvider.Color = Colors[rand.Intn(len(Colors))]
-        }
-        // NOTE: We need to use a JSON marshaller here because runtiem.RawExtension
-        // type expects a JSON blob.
-        raw, err := json.Marshal(r)
-        if err != nil {
-            fmt.Fprintf(os.Stderr, "failed to marshal resource: %v", err)
-            os.Exit(1)
-        }
-        obj.Desired.Resources[i].Resource = runtime.RawExtension{Raw: raw}
-    }
+r := &dummyv1alpha1.Robot{}
+if err := yaml.Unmarshal(desired.Resource.Raw, r); err != nil {
+fmt.Fprintf(os.Stderr, "failed to unmarshal desired resource: %v", err)
+os.Exit(1)
+}
+if colors[desired.Name] != "" {
+r.Spec.ForProvider.Color = colors[desired.Name]
+} else {
+r.Spec.ForProvider.Color = Colors[rand.Intn(len(Colors))]
+}
+// NOTE: We need to use a JSON marshaller here because runtiem.RawExtension
+// type expects a JSON blob.
+raw, err := json.Marshal(r)
+if err != nil {
+fmt.Fprintf(os.Stderr, "failed to marshal resource: %v", err)
+os.Exit(1)
+}
+obj.Desired.Resources[i].Resource = runtime.RawExtension{Raw: raw}
+}
 ```
 
 ```bash
@@ -140,7 +140,8 @@ go mod tidy
 
 Let's check locally to make sure everything works as expected with a sample input.
 ```bash
-# You can download the test.yaml file here: TODO
+# You can download the test.yaml file with the following command:
+# curl -L https://raw.githubusercontent.com/crossplane-contrib/contribfest/main/lab-composition-functions/xfn-random/test.yaml > test.yaml
 cat test.yaml | go run main.go
 ```
 
@@ -156,30 +157,30 @@ Set the new image on our `Composition` object with `kubectl edit`.
 ```yaml
   ...
   functions:
-  - name: my-random-function
-    type: Container
-    container:
-      image: muvaf/xfn-random:v0.1.0
+    - name: my-random-function
+      type: Container
+      container:
+        image: muvaf/xfn-random:v0.1.0
 ```
 
 Edit `Composition` to add a second `Robot` object but this time without its
 color parameter set. The full `resources` array should look like the following:
 ```yaml
   resources:
-  - name: one-robot
-    base:
-      apiVersion: iam.dummy.upbound.io/v1alpha1
-      kind: Robot
-      spec:
-        forProvider:
-          color: yellow
-  - name: second-robot
-    base:
-      apiVersion: iam.dummy.upbound.io/v1alpha1
-      kind: Robot
-      spec:
-        forProvider:
-          color: ""
+    - name: one-robot
+      base:
+        apiVersion: iam.dummy.upbound.io/v1alpha1
+        kind: Robot
+        spec:
+          forProvider:
+            color: yellow
+    - name: second-robot
+      base:
+        apiVersion: iam.dummy.upbound.io/v1alpha1
+        kind: Robot
+        spec:
+          forProvider:
+            color: ""
 ```
 
 Let's create a new `RobotGroup` object and see what happens.
