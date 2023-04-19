@@ -1,17 +1,14 @@
 # Prerequisites
 
-* `kubectl`
-* `docker`
-* `go`
-
-## Preparing the environment
-
 You'll need the following tools installed:
 * `go`
 * `docker`
 * `kind` (Kubernetes in Docker)
 * `kubectl`
 * `helm`
+
+## Preparing the environment
+
 
 1. Create a kind cluster.
    ```bash
