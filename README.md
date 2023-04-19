@@ -6,3 +6,7 @@ This repo contains the content and labs for the first (of many to come we hope)
 ## Lab 1 - Contributing Workflow
 
 * [Lab 1 - Contributing Workflow](./lab-contributing-workflow.md)
+
+## Lab 2 - Composition Functions
+
+* [Lab 2 - Composition Functions](./lab-composition-functions/README.md)
