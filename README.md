@@ -1,14 +1,14 @@
 # Crossplane Contribfest
 
-This repo contains the content and labs for the first (of many to come we hope)
-[Crossplane Contribfest](https://sched.co/1Hzcf)!
+This repo contains the content and labs for the [Crossplane
+Contribfest](https://sched.co/1R2mW)!
 
 ## Content
 
-* [Presentation](./presentation.pdf)
-* [Lab 1 - Contributing Workflow](./lab-contributing-workflow.md)
-* [Lab 2 - Composition Functions](./lab-composition-functions/README.md)
+* [Lab 1 - Writing a Composition Function](./lab-01.md)
+* [Lab 2 - Writing your own Function](./lab-02.md)
 
 ## Examples
 
-* [Add your composition function repo here]
+* [Attendees are welcome to open PRs to add links to their composition function
+  repos here!]
